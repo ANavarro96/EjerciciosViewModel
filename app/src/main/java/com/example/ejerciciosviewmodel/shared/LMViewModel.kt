@@ -16,14 +16,29 @@ import kotlin.random.Random
 
 class LMViewModel : ViewModel(){
 
-    private val _listaValores = MutableStateFlow(mutableStateListOf<Int>())
+    // Variable que representa los datos
+    private val _listaValores = MutableStateFlow(mutableStateListOf<Int>().apply { addAll(obtenerDatos()) })
     val listaValores = _listaValores.asStateFlow()
 
-    init {
+    // Tened cuidado y diferenciad entre lista mutable (controla la UI y gestiona el estado)
+    // con un List normal (cambios a dicho tipo NO conllevan una recomposición).
 
+    // TODO: Función que devuelve una lista con 100 elementos entre el 0 y el 30.
+    fun obtenerDatos() : ArrayList<Int>{
+
+        return ArrayList<Int>()
     }
     fun rellenarLista(){
-        //
+        // TODO: Esta función limpia la lista de valores y la vuelve a recargar
     }
+
+    fun anyadirElemento(){
+       // TODO: Esta función añade un elemento a la lista de valores.
+       // TODO: Debe añadirlo en PRIMERA posición
+
+    }
+
+
+
 
 }

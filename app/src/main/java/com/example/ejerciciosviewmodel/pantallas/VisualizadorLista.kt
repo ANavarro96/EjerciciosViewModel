@@ -32,28 +32,29 @@ import kotlinx.coroutines.launch
 @Composable
 fun VisualizadorLista(){
     val viewModelListas : LMViewModel = viewModel()
+    // TODO: Mostrar por pantalla el número de elementos de las listas
     Column(){
-        Text(text = "Todos los valores: ", fontSize = 30.sp)
+        Text(text = "Todos los valores: X elementos", fontSize = 30.sp)
         LazyRow(){
-
+            // TODO: Usar el elemento CardElemento
         }
 
-        Text(text = "Aquellos mayores que 10  ", fontSize = 30.sp)
+        Text(text = "Aquellos mayores que 10 X elementos ", fontSize = 30.sp)
         LazyRow(){
-
+            // TODO: Usar el elemento CardElemento
         }
 
-        Text(text = "Aquellos menores que 10", fontSize = 30.sp)
+        Text(text = "Aquellos menores que 10 X elementos", fontSize = 30.sp)
         LazyRow(){
-
+            // TODO: Usar el elemento CardElemento
         }
 
         Row(horizontalArrangement = Arrangement.SpaceBetween){
-            Button(onClick = {}){
+            Button(onClick = {viewModelListas.rellenarLista()}){
                 Text("Recargar lista")
             }
 
-            Button(onClick = {}){
+            Button(onClick = {viewModelListas.rellenarLista()}){
                 Text("Añadir elemento")
             }
         }

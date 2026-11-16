@@ -11,6 +11,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+
+// TODO: Crear una clase que represente TODO el estado de la pantalla
+// ESTADO (POR DECIMOCTAVA VEZ) ->
+// CUALQUIER VALOR QUE PUEDE CAMBIAR CON EL TIEMPO Y QUE DETERMINA LO QUE SE MUESTRA EN LA UI
 class TemperaturaViewModel : ViewModel(){
 
     // Esta variable privada no es accesible desde fuera, y representa

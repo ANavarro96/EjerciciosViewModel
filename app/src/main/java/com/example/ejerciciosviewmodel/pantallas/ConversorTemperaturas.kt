@@ -34,6 +34,7 @@ fun ConversorTemperaturas(
 ){
     val redondeo = temperaturaViewModel.redondeo.collectAsState().value
     val temperaturaState = rememberTextFieldState("0")
+
     PantallaTemperaturas(
         redondeo = redondeo,
         onRedondeoChanged = { temperaturaViewModel.actualizarSwitch(it) },
@@ -53,7 +54,6 @@ fun PantallaTemperaturas(
     result: String
 ){
 
-    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier.padding(32.dp),

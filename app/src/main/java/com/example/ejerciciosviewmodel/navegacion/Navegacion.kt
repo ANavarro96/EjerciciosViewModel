@@ -1,39 +1,48 @@
 package com.example.ejerciciosviewmodel.navegacion
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
 import com.example.ejerciciosviewmodel.pantallas.ConversorTemperaturas
+import com.example.ejerciciosviewmodel.pantallas.ConversorTemperaturasSinVM
 import com.example.ejerciciosviewmodel.pantallas.PantallaMenu
 import com.example.ejerciciosviewmodel.pantallas.RaveInTheRiver
 import com.example.ejerciciosviewmodel.pantallas.VisualizadorLista
 import com.example.ejerciciosviewmodel.shared.Rutas
 
 @Composable
-fun GrafoNavegacion(){
+fun GrafoNavegacion() {
+    val backStack = rememberNavBackStack(Rutas.Menu)
 
-    val navController = rememberNavController()
+    NavDisplay(
+        backStack = backStack,
+        onBack = { backStack.removeLastOrNull() },
+        entryProvider = entryProvider {
+            entry<Rutas.Menu> {
+                PantallaMenu(
+                    onNavigateToTemperaturaSinVM = { backStack.add(Rutas.TemperaturaSinVM) },
+                    onNavigateToTemperatura = { backStack.add(Rutas.Temperatura) },
+                    onNavigateToRave = { backStack.add(Rutas.Rave) },
+                    onNavigateToListas = { backStack.add(Rutas.Listas) }
+                )
+            }
 
-    NavHost(navController = navController, startDestination = Rutas.Menu.ruta){
+            entry<Rutas.TemperaturaSinVM> {
+                ConversorTemperaturasSinVM()
+            }
 
-        composable(Rutas.Menu.ruta){
-            PantallaMenu(navController = navController)
+            entry<Rutas.Temperatura> {
+                ConversorTemperaturas()
+            }
+
+            entry<Rutas.Rave> {
+                RaveInTheRiver()
+            }
+
+            entry<Rutas.Listas> {
+                VisualizadorLista()
+            }
         }
-
-        composable(Rutas.Temperatura.ruta){
-            ConversorTemperaturas()
-        }
-
-        composable(Rutas.Rave.ruta){
-            RaveInTheRiver()
-        }
-
-        composable(Rutas.Listas.ruta){
-            VisualizadorLista()
-        }
-
-
-    }
-
+    )
 }

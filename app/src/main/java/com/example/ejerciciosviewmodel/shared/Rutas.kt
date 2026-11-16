@@ -1,8 +1,21 @@
 package com.example.ejerciciosviewmodel.shared
 
-sealed class Rutas(val ruta: String){
-    object Temperatura : Rutas("temperatura")
-    object Rave : Rutas("rave")
-    object Menu : Rutas("menu")
-    object Listas : Rutas("listas")
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
+
+sealed interface Rutas : NavKey {
+    @Serializable
+    data object Menu : Rutas
+
+    @Serializable
+    data object TemperaturaSinVM : Rutas
+
+    @Serializable
+    data object Temperatura : Rutas
+
+    @Serializable
+    data object Rave : Rutas
+
+    @Serializable
+    data object Listas : Rutas
 }

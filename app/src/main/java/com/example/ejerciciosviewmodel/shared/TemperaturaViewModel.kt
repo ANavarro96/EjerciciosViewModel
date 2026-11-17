@@ -1,32 +1,48 @@
 package com.example.ejerciciosviewmodel.shared
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.update
+import kotlin.math.roundToInt
 
+// Clase que representa TODO el estado de la pantalla (propiedades inmutables val)
+data class PantallaTemperaturaState(
+    val redondeo: Boolean = false,
+    val resultado: String = "",
+    val texto: TextFieldState = TextFieldState("")
+)
 
-// TODO: Crear una clase que represente TODO el estado de la pantalla
-// ESTADO (POR DECIMOCTAVA VEZ) ->
-// CUALQUIER VALOR QUE PUEDE CAMBIAR CON EL TIEMPO Y QUE DETERMINA LO QUE SE MUESTRA EN LA UI
-class TemperaturaViewModel : ViewModel(){
+class TemperaturaViewModel : ViewModel() {
 
-    // Esta variable privada no es accesible desde fuera, y representa
-    // el flow de nuestra variable de estado.
-    private val _redondeo = MutableStateFlow(false)
+    private val _pantallaTemperaturaState = MutableStateFlow(PantallaTemperaturaState())
+    val pantallaTemperaturaState = _pantallaTemperaturaState.asStateFlow()
 
-    // Esta variable publica recoge y actualiza el valor del estado mutable, y es el que usará
-    // la interfaz.
-    val redondeo = _redondeo.asStateFlow()
-
-    fun actualizarSwitch(nuevoValor : Boolean){
-       _redondeo.value = nuevoValor
+    fun actualizarSwitch(nuevoValor: Boolean) {
+        _pantallaTemperaturaState.update { currentState ->
+            currentState.copy(redondeo = nuevoValor)
+        }
     }
 
+    fun actualizarResultado() {
+        val current = _pantallaTemperaturaState.value
+        val tempText = current.texto.text.toString()
+        val tempDouble = tempText.toDoubleOrNull()
+
+        val nuevoResultado = if (tempDouble != null) {
+            val fahrenheit = (tempDouble * 1.8) + 32
+            if (current.redondeo) {
+                "${fahrenheit.roundToInt()} °F"
+            } else {
+                "${String.format("%.2f", fahrenheit)} °F"
+            }
+        } else {
+            "Introduce una temperatura válida"
+        }
+
+        _pantallaTemperaturaState.update { currentState ->
+            currentState.copy(resultado = nuevoResultado)
+        }
+    }
 }
